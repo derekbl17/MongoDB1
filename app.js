@@ -3,6 +3,7 @@ const app = express();
 app.use(express.json());
 require("dotenv").config();
 const mongoose = require("mongoose");
+const {createUser, getAllUsers,getUserByID,updateUser,deleteUser}=require("./controllers/userControlers.js");
 
 mongoose
   .connect(process.env.MONGO_URL, { dbName: "Custom_database" })
@@ -133,6 +134,14 @@ const deleteCourses = async () => {
   // deletes all that match conditions
   const course = await Course.deleteMany({ teacher: "Vytautas" });
 };
-deleteCourses();
+//deleteCourses();
+
+app.post("/users",createUser)
+//app.get("/users",getAllUsers)
+app.get("/users/:id",getUserByID) //fix
+app.put("/users/:id",updateUser)
+app.delete("/users/:id",deleteUser)
+
 const PORT = process.env.PORT || 5555;
 app.listen(PORT, () => console.log(`server is UP on port: ${PORT}`));
+ 
